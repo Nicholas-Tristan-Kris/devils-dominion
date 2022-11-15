@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1870020622}
   - component: {fileID: 1870020621}
-  - component: {fileID: 1870020620}
+  - component: {fileID: 1870020623}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -225,24 +225,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1870020620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870020619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6a3eb09745da234d9aad691bcfc3b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character_class: knight
-  speed: 3
-  movementSprites:
-  - {fileID: 21300000, guid: f19ca81566246fe4eb2e8f7df60efb42, type: 3}
-  - {fileID: 21300000, guid: 5c7c9870233e3b34a944fc9466e2c147, type: 3}
-  - {fileID: 21300000, guid: dece26a853dc36446a768a4435e694e8, type: 3}
 --- !u!212 &1870020621
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -310,6 +292,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1870020623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870020619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c1476ca7cb74b4b9cbdaabfc18db67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 1
+  jumpHeight: 1
+  canJump: 0
+  walkForwardSprites:
+  - {fileID: -654554829, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: -668125971, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: -546250189, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: 762844220, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: 1384991273, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: 791509878, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: 146804849, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  - {fileID: -1871349683, guid: 5c1b7f8b1d1f5bd4ab5f6fa4fbc5b9d6, type: 3}
+  walkRightSprites: []
+  walkForwardRightSprites: []
+  jumpSprites: []
 --- !u!1 &1888194639
 GameObject:
   m_ObjectHideFlags: 0
