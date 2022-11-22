@@ -2,34 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Character : MonoBehaviour
 {
-    [SerializeField] private float walkSpeed = 1.0f;
-    [SerializeField] private float jumpHeight = 1.0f;
-    [SerializeField] private bool canJump = false;
     
-    [SerializeField] private Sprite[] walkForwardSprites;
-    [SerializeField] private Sprite[] walkRightSprites;
-    [SerializeField] private Sprite[] walkForwardRightSprites;
-    [SerializeField] private Sprite[] jumpSprites;
 
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private bool canJump = false;
+    [SerializeField] private int health;
+
+    private Animator animator;
+    private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer; 
 
-    public Character() {
+    private Vector2 movement;
+
+    protected virtual void Start() {
+        this.rb = GetComponent<Rigidbody2D>();
+        this.animator = GetComponent<Animator>();
+        this.spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update() {
-    
+    protected virtual void Update() {
+        movement.x = Input.GetAxis("Right");
+        movement.y = Input.GetAxis("Forward");
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.magnitude);
+
+        if (health < 0.001) {
+            Die();
+        }
     }
-    
-    public void Walk(float forward, float right) {
+
+    private void FixedUpdate() {
+        Walk();
+        if (Input.GetAxis("Jump") > 0 && canJump) {Jump();}
+    }
+
+    public void Walk() {
         //Change Pos
-        this.transform.position += new Vector3(0, forward * Time.deltaTime * walkSpeed, 0);
-        this.transform.position += new Vector3(right * Time.deltaTime * walkSpeed, 0, 0);
+        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime * walkSpeed);
 
-        //Set according sprite
-        spriteRenderer.sprite = (forward != 0 && right != 0) ? walkForwardSprites[2] : (right != 0) ? walkForwardSprites[1] : walkForwardSprites[0];;
-        spriteRenderer.flipX = right < 0 ? true : false;
-        spriteRenderer.flipY = forward < 0 ? true : false;
+        //Flip accordingly
+        spriteRenderer.flipX = movement.x > 0 ? true : false;
+    }
+
+    public void Jump() {
+        rb.AddForce(Vector2.up * jumpHeight * Time.fixedDeltaTime, ForceMode2D.Impulse);
+    }
+
+    public void Die() {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        walkSpeed = 0; jumpHeight = 0;
+        animator.SetTrigger("Die");
+
     }
 }
