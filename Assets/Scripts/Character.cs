@@ -7,13 +7,14 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     
-
+    [Header("Character Settings")]
     [SerializeField] protected float walkSpeed;
     [SerializeField] protected float jumpHeight;
     [SerializeField] protected bool canJump = false;
-    [SerializeField] protected int maxHealth = 100;
+    [SerializeField] public int maxHealth;
+    [SerializeField] protected float healthRegenSpeed = 0.01f;
 
-    protected int health;
+    public float health;
     protected Animator animator;
     protected Rigidbody2D rb;
     protected SpriteRenderer spriteRenderer; 
@@ -37,7 +38,12 @@ public class Character : MonoBehaviour
         if (health < 0.001) {
             Die();
         }
+        float newHealth = healthRegenSpeed * Time.deltaTime;
+        if ((health + newHealth) <= maxHealth) {
+            health += newHealth;
+        }
     }
+
 
     private void FixedUpdate() {
         Walk();
@@ -57,10 +63,14 @@ public class Character : MonoBehaviour
         rb.AddForce(Vector2.up * jumpHeight * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
 
-    public void Die() {
+    private void Die() {
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         walkSpeed = 0; jumpHeight = 0;
         animator.SetTrigger("Die");
 
+    }
+
+    public void RemoveHealth(int lost) {
+        health -= lost;
     }
 }
