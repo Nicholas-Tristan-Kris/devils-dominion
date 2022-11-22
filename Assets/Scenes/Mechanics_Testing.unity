@@ -396,6 +396,7 @@ MonoBehaviour:
   canJump: 1
   maxHealth: 100
   isBlocking: 0
+  blockAnim: {fileID: 7400000, guid: 06c50b9622c8c05408b079fe5a831811, type: 2}
 --- !u!95 &1870020624
 Animator:
   serializedVersion: 4
