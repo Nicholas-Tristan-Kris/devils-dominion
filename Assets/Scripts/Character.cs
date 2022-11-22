@@ -8,14 +8,15 @@ public class Character : MonoBehaviour
 {
     
 
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private bool canJump = false;
-    [SerializeField] private int health;
+    [SerializeField] protected float walkSpeed;
+    [SerializeField] protected float jumpHeight;
+    [SerializeField] protected bool canJump = false;
+    [SerializeField] protected int maxHealth = 100;
 
-    private Animator animator;
-    private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer; 
+    protected int health;
+    protected Animator animator;
+    protected Rigidbody2D rb;
+    protected SpriteRenderer spriteRenderer; 
 
     private Vector2 movement;
 
@@ -23,11 +24,12 @@ public class Character : MonoBehaviour
         this.rb = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
         this.spriteRenderer = GetComponent<SpriteRenderer>();
+        health = maxHealth;
     }
 
     protected virtual void Update() {
-        movement.x = Input.GetAxis("Right");
-        movement.y = Input.GetAxis("Forward");
+        movement.x = Input.GetAxis("Horizontal");
+        movement.y = Input.GetAxis("Vertical");
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
         animator.SetFloat("Speed", movement.magnitude);
@@ -51,6 +53,7 @@ public class Character : MonoBehaviour
     }
 
     public void Jump() {
+        //TODO fix jumping mechanic
         rb.AddForce(Vector2.up * jumpHeight * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
 
