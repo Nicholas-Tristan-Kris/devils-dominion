@@ -14,11 +14,13 @@ public class Character : MonoBehaviour
     [SerializeField] public int maxHealth;
     [SerializeField] protected float healthRegenSpeed = 0.01f;
 
+
     public float health;
     protected Animator animator;
     protected Rigidbody2D rb;
     protected SpriteRenderer spriteRenderer; 
 
+    protected bool isBlocking = false;
     private Vector2 movement;
 
     protected virtual void Start() {
@@ -51,6 +53,8 @@ public class Character : MonoBehaviour
     }
 
     public void Walk() {
+        if (isBlocking) return;
+        
         //Change Pos
         rb.MovePosition(rb.position + movement * Time.fixedDeltaTime * walkSpeed);
 
