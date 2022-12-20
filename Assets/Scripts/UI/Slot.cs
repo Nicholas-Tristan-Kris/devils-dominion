@@ -8,16 +8,20 @@ public class Slot : MonoBehaviour
     [SerializeField] private Item item;
     private Slider slider;
     private float timeLeftInCooldown;
+    private Button button;
+    private Inventory inventory;
 
     public Image image;
     public float TimeLeftInCooldown {get; set;}
     public Slider Slider {get; set;}
     public Item Item {get; set;}
+    public bool inHotbar = false; //if not hotbar then in backpack - set to true if Hotbar() detects slot
 
-    void Start() {
+    protected void Start() {
         slider = GetComponentInChildren<Slider>();
         if (slider == null) {Debug.LogError("No Slider Found In Child Of Slot");}
         image = GetComponent<Image>();
+        inventory = FindObjectOfType<Inventory>();
     }
 
     public void use() {
@@ -42,5 +46,10 @@ public class Slot : MonoBehaviour
     public void set(Item item) {
         this.item = item;
         slider.maxValue = item.Cooldown;
+    }
+
+    private void OnClick() {
+        inventory.swapItem(this, inHotbar);
+        inHotbar = !inHotbar;
     }
 }
