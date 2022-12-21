@@ -11,7 +11,7 @@ public class Item : MonoBehaviour
 
     [SerializeField] protected int usesLeft;
     [SerializeField] protected float cooldown;
-    [SerializeField] protected int sellPrice;
+    [SerializeField] protected int price;
     public float Cooldown {get; set;}
     [SerializeField] protected Image image;
     public Image Image {get; set;}
@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PRICE = sellPrice.ToString();
+        PRICE = price.ToString();
     }
 
     // Update is called once per frame

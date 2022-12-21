@@ -10,16 +10,19 @@ public class Inventory : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private GameObject backpack, hotbar;
     
-    [Header("Stats")] //TODO stats here
+    [Header("Stats")]
     [SerializeField] private float maxHealth;
     [SerializeField] private int money;
     
     private bool isOpen = false;
-
+    private float sinceChange = 0f;
+    private StatManager statManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        statManager = FindObjectOfType<StatManager>();
+
         Slot[] tmp = FindObjectsOfType<Slot>(); //get all slots in the game 
         foreach (Slot slot in tmp) {
             slots.Add(slot);
@@ -29,22 +32,28 @@ public class Inventory : MonoBehaviour
         if (backpack == null) backpack = GameObject.FindGameObjectWithTag("Backpack");
         if (hotbar == null) hotbar = GameObject.FindGameObjectWithTag("Hotbar");
 
-        openInventory();
+        setInventory(false);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Inventory") != 0) {
-            openInventory();
+        sinceChange += Time.deltaTime;
+        if (Input.GetAxis("Inventory") > 0 && sinceChange > 0.5f) {
             isOpen = !isOpen;
+            setInventory(isOpen);
+            sinceChange = 0f;
         }
     }
 
-    private void openInventory() {
-        backpack.SetActive(isOpen);
-        //TODO maybe some pause stuff here?
+    private void setInventory(bool open) {
+        backpack.SetActive(open);
+        pause(open);
+    }
+
+    private void pause(bool set) {
+        //TODO create pause mechanic Time.timeScale = set ? 0 : 1;
     }
 
     public void swapItem(Slot swap, bool inHotbar) {

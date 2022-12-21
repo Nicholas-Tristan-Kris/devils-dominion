@@ -35,8 +35,6 @@ public class Player : Character
 
         if (base.isBlocking) {
             timeInAnim += Time.deltaTime;
-            Debug.Log("timeInAnim: " + timeInAnim);
-            Debug.Log("Is timeInAnime >= blockingAnimation.length? " + (timeInAnim >= blockingAnimation.length)); 
             if (timeInAnim >= blockingAnimation.length) {
                 base.isBlocking = false; 
                 Debug.Log("set isBlocking to false");
