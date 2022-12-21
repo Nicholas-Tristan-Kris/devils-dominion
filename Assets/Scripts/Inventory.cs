@@ -63,7 +63,7 @@ public class Inventory : MonoBehaviour
             //TODO swap to backpack
         } else {
             //TODO swap to hotbar
-            hotbar.GetComponent<Hotbar>().addItem(swap.Item);
+            //hotbar.GetComponent<Hotbar>().addItem(swap.Item);
         }
         
     }
