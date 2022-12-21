@@ -48,7 +48,7 @@ public class Slot : MonoBehaviour
         slider.maxValue = item.Cooldown;
     }
 
-    private void OnClick() {
+    public void OnClick() {
         inventory.swapItem(this, inHotbar);
         inHotbar = !inHotbar;
     }

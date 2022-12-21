@@ -26,8 +26,8 @@ public class Inventory : MonoBehaviour
         }
 
         player = FindObjectOfType<Player>();
-        backpack = GameObject.FindGameObjectWithTag("Backpack");
-        hotbar = GameObject.FindGameObjectWithTag("Hotbar");
+        if (backpack == null) backpack = GameObject.FindGameObjectWithTag("Backpack");
+        if (hotbar == null) hotbar = GameObject.FindGameObjectWithTag("Hotbar");
 
         openInventory();
 

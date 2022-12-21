@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
     protected Rigidbody2D rb;
     protected SpriteRenderer spriteRenderer; 
 
-    protected bool isBlocking = false;
+    public bool isBlocking = false;
     private Vector2 movement;
 
     protected virtual void Start() {

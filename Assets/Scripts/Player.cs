@@ -8,7 +8,7 @@ public class Player : Character
     [Header("Action Settings")]
     [SerializeField] protected AnimationClip blockingAnimation, meleeAnimation, rangeAnimation, specialAnimation;
 
-    private float timeInAnim = 0f;
+    public float timeInAnim = 0f;
     private bool isMelee = false, isRange = false, isSpecial = false;
 
 
@@ -28,48 +28,47 @@ public class Player : Character
     {
         base.Update();
         
-        if (Input.GetAxis("Block") != 0) {Block(); }
+        if (Input.GetAxis("Block") > 0 && !base.isBlocking) {Block();}
         else if (Input.GetAxis("Melee") != 0) {MeleeAttack();} 
         else if (Input.GetAxis("Range") != 0) {RangeAttack(); } 
         else if (Input.GetAxis("Special") != 0) {SpecialAttack(); }
 
-        if (isBlocking) {
-            timeInAnim += Time.deltaTime; 
+        if (base.isBlocking) {
+            timeInAnim += Time.deltaTime;
+            Debug.Log("timeInAnim: " + timeInAnim);
+            Debug.Log("Is timeInAnime >= blockingAnimation.length? " + (timeInAnim >= blockingAnimation.length)); 
             if (timeInAnim >= blockingAnimation.length) {
-                isBlocking = false; 
+                base.isBlocking = false; 
+                Debug.Log("set isBlocking to false");
                 timeInAnim = 0f;
             }
         } else if (isMelee) {
             timeInAnim += Time.deltaTime;
             if (timeInAnim >= meleeAnimation.length) {
-                isMelee = !isMelee;
+                isMelee = false;
                 timeInAnim = 0f;
             }
         } else if (isRange) {
             timeInAnim += Time.deltaTime;
             if (timeInAnim >= rangeAnimation.length) {
-                isRange = !isRange;
+                isRange = false;
                 timeInAnim = 0f;
             }
         } else if (isSpecial) {
             timeInAnim += Time.deltaTime;
             if (timeInAnim >= specialAnimation.length) {
-                isSpecial = !isSpecial;
+                isSpecial = false;
                 timeInAnim = 0f;
             }
-        } else {
-            timeInAnim = 0f;
         }
 
 
     }
 
     protected void Block() {
-        Debug.Log("Blocking");
-        isBlocking = true;
+        Debug.Log("Blocking: true");
+        base.isBlocking = true;
         animator.SetTrigger("Block");
-
-
     }
 
     protected void DoubleJump() {

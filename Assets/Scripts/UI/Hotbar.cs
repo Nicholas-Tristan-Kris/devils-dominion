@@ -8,14 +8,15 @@ public class Hotbar : MonoBehaviour
     public int openSlot = 0;
 
     [SerializeField] private static int numSlots = 10;
-    [SerializeField] List<Slot> slots = new List<Slot>();
+    [SerializeField] List<Slot> slots = new List<Slot>(numSlots);
 
     // Start is called before the first frame update
     void Start()
     {
         Slot[] tmp = GetComponentsInChildren<Slot>();
+        int idx = 0;
         foreach (Slot slot in tmp) {
-            slots.Add(slot);
+            slots[idx++] = slot;
             slot.inHotbar = true;
             if (slot.Item != null) openSlot++;
             if (slots.Count > numSlots) {
@@ -29,7 +30,8 @@ public class Hotbar : MonoBehaviour
     {
         for (int i = 0; i < numSlots; i++) {
             Slot slot = slots[i];
-            if (Input.GetButtonDown(i.ToString())) 
+            if (slot == null) continue;
+            if (Input.GetKeyDown(i.ToString())) 
                 slot.use();
             
             if (slot.Slider.value > 0) 
